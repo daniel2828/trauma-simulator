@@ -35,7 +35,7 @@ controller.list = async (req, res) => {
 controller.create = async (req,res) => {
   // data
   const { sex, age, weight, partBody, bloodLoss, diastolicPressure, sistolicPressure, temperature, heartRate, breathingRate, urineOutput,
-            saturation, mentalStatus, time, traineeId, trainerId, phase } = req.body;
+            saturation, mentalStatus, time, traineeId, trainerId, phase, isTrainer } = req.body;
     
   // create
   const data = await Simulation.create({
@@ -55,7 +55,8 @@ controller.create = async (req,res) => {
     time: time,
     traineeId: traineeId,
     trainerId: trainerId,
-    phase: phase
+    phase: phase,
+    isTrainer : isTrainer
   })
   .then(function(data){
     return data;
@@ -187,6 +188,23 @@ controller.listByTraineeId = async (req, res) => {
 
   res.json({success : true, data : data});
 }
+
+controller.listByTraineeAndTrainer = async (req, res) => {
+  const { idTrainer, idTrainee } = req.params;
   
+  const data = await Simulation.findAll({
+    include: [ { model: Trainer, as: 'trainer' },
+               { model: Trainee, as: 'trainee' } ],
+    where: { traineeId: idTrainee , trainerId: idTrainer }
+  })
+  .then(function(data){
+    return data;
+  })
+  .catch(error => {
+    return error;
+  }); 
+
+  res.json({success : true, data : data});
+}
 
 module.exports = controller;

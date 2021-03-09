@@ -30,10 +30,12 @@ var Simulation = sequelize.define('simulation', {
     phase: Sequelize.STRING,
     temperature: Sequelize.DOUBLE, 
     inform: Sequelize.BLOB,
+    
+    isTrainer: Sequelize.BOOLEAN,
     testData: {
         type: Sequelize.JSON,
         defaultValue: null
-    } 
+    }
 },
 {
 	 timestamps: false,

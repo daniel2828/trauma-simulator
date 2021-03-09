@@ -7,6 +7,7 @@ import 'bootstrap/dist/js/bootstrap.bundle.min';
 import Inform from '../Information/Document'
 import { Redirect } from "react-router-dom"
 import { Alert } from 'reactstrap';
+import { each } from 'jquery';
 
 class SimulationList extends React.Component  {
   constructor(props){
@@ -18,7 +19,123 @@ class SimulationList extends React.Component  {
       redirect: false,
       id: this.props.location.state.id
     }
+   
   }
+  handleRandomCreate(){
+        var arrSimulations = [];
+  
+           //const baseGetURL = "http://localhost:8080/simulation/listByTraineeAndTrainer";
+           // Comprobar que el trainee no tenga ya las simulaciones creadas
+           const baseGetUrl = "https://localhost:8080/simulation/listTraineeAndTrainer";
+            axios.get(baseGetUrl+  "/" + "train" + "&" + this.state.id)
+            .then(res => {
+              const data = res.data.data;
+              if (data) { 
+                  this.setState({ listSimulation:data });
+              } else { 
+                const baseUrl = "http://localhost:8080/simulation/create"
+                // SUSTITUIR POR TUS DATAPOST
+           // Primera simulacion
+            var datapost1 = {
+                trainerId: 2,
+                traineeId: this.state.id,
+                sex: 1,
+                age: 30,
+                weight: 60,
+                partBody: "brazo derecho",
+                bloodLoss: 10,
+                sistolicPressure: 10,
+                diastolicPressure: 10,
+                heartRate: this.state.heartRate,
+                breathingRate: this.state.breathingRate,
+                urineOutput: this.state.urineOutput,
+                saturation: this.state.saturation,
+                mentalStatus: this.state.mentalStatus,
+                phase: this.state.phase,
+                temperature: this.state.temperature,
+                time: this.state.time,
+                isTrainer: true
+            }
+             var datapost2 = {
+                trainerId: "train",
+                traineeId: this.state.traineeId,
+                sex: 1,
+                age: 30,
+                weight: 60,
+                partBody: "brazo derecho",
+                bloodLoss: 10,
+                sistolicPressure: 10,
+                diastolicPressure: 10,
+                heartRate: this.state.heartRate,
+                breathingRate: this.state.breathingRate,
+                urineOutput: this.state.urineOutput,
+                saturation: this.state.saturation,
+                mentalStatus: this.state.mentalStatus,
+                phase: this.state.phase,
+                temperature: this.state.temperature,
+                time: this.state.time,
+                isTrainer: true
+             }
+              var datapost3 = {
+                trainerId: "train",
+                traineeId: this.state.traineeId,
+                sex: 1,
+                age: 30,
+                weight: 60,
+                partBody: "brazo derecho",
+                bloodLoss: 10,
+                sistolicPressure: 10,
+                diastolicPressure: 10,
+                heartRate: this.state.heartRate,
+                breathingRate: this.state.breathingRate,
+                urineOutput: this.state.urineOutput,
+                saturation: this.state.saturation,
+                mentalStatus: this.state.mentalStatus,
+                phase: this.state.phase,
+                temperature: this.state.temperature,
+                time: this.state.time,
+                isTrainer: true
+                }
+          // La añadimos al array
+          arrSimulations.push(datapost1);
+          arrSimulations.push(datapost2);
+          arrSimulations.push(datapost3);
+        
+       
+          arrSimulations.forEach(dataPost => { 
+            // Envio al backend y se genera en la base de datos si todo va bien
+             axios.post(baseUrl,dataPost)
+            .then(response=>{
+                if (response.data.success===true) {
+                    //alert(response.data.message)
+                   
+                    //this.setState({ alert: true});
+                }
+                else {
+                    alert(response.data.message)
+                }
+            })
+            .catch(error=>{
+                alert("Error 34 "+error)
+            })
+
+
+          })
+              }
+              
+            })
+            .catch(error => {
+              alert(error)
+            })
+             this.setState({ listSimulation: arrSimulations });
+         
+          
+       
+        
+       
+     
+    }
+  
   componentDidMount(){
     if (this.state.isTrainer) {
       axios.get("http://localhost:8080/simulation/listTrainer/"+this.props.location.state.id)
@@ -31,14 +148,19 @@ class SimulationList extends React.Component  {
       })
 
     } else {
-      axios.get("http://localhost:8080/simulation/listTrainee/"+this.props.location.state.id)
-      .then(res => {
-        const data = res.data.data;
-        this.setState({ listSimulation:data });
-      })
-      .catch(error => {
-        alert(error)
-      })
+      if (this.props.trainerList) { 
+         this.handleRandomCreate();
+      }
+      else {
+        axios.get("http://localhost:8080/simulation/listTrainee/" + this.props.location.state.id)
+          .then(res => {
+            const data = res.data.data;
+            this.setState({ listSimulation: data });
+          })
+          .catch(error => {
+            alert(error)
+          })
+      }
     }
   }
 

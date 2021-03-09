@@ -5,8 +5,10 @@ const router = express.Router();
 const simulationController = require('../controllers/simulationController')
 
 router.get('/list',simulationController.list );
-router.get('/listTrainer/:id',simulationController.listByTrainerId);
-router.get('/listTrainee/:id',simulationController.listByTraineeId);
+router.get('/listTrainer/:id', simulationController.listByTrainerId);
+router.get('/listTrainee/:id', simulationController.listByTraineeId);
+// DANI
+router.get('/listTraineeAndTrainer/:idTrainer&:idTrainee',simulationController.listByTraineeAndTrainer);
 router.get('/createData', simulationController.testdata)
 router.post('/create',simulationController.create);
 router.get('/get/:id',simulationController.get);
