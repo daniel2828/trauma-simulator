@@ -32,11 +32,6 @@ import jsPDF from 'jspdf'
 import analisis from '../../assets/analisis.jpg'
 
 
-<<<<<<< HEAD
-
-=======
-//var this.avatar = naked
->>>>>>> fa652b918a1fbafced48e63220ca5a5db14d576b
 var content;
 
 var rx = []
@@ -1317,11 +1312,7 @@ class Actions extends Component {
                             
                             <Button className={this.state.cleanClicked?"clicked":null} onClick={() => this.clean()}>{t('simulation.clean')}</Button>
                             <Button className={this.state.oxygenateClicked?"clicked":null} onClick={() => this.oxygenate()}>{t('simulation.oxygenate')}</Button>
-<<<<<<< HEAD
                             <Button className={this.state.intubateClicked?"clicked":null}onClick={() => this.intubate()}>{t('simulation.intubate')}</Button>
-=======
-                            <Button className={this.state.intubateClicked?"clicked":null} onClick={() => this.intubate()}>{t('simulation.intubate')}</Button>
->>>>>>> fa652b918a1fbafced48e63220ca5a5db14d576b
 
                             
 

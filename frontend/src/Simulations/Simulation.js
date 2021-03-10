@@ -58,13 +58,8 @@ var testData = null
 
 export default class LoginForm extends Component {
     constructor(props){
-<<<<<<< HEAD
         super(props);
         this.timeSim = 1;
-=======
-      super(props);
-      this.timeSim=1;
->>>>>>> fa652b918a1fbafced48e63220ca5a5db14d576b
       this.state = {
         sex: 0,
         age: 0,

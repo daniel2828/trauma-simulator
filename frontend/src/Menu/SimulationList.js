@@ -27,7 +27,7 @@ class SimulationList extends React.Component  {
            //const baseGetURL = "http://localhost:8080/simulation/listByTraineeAndTrainer";
            // Comprobar que el trainee no tenga ya las simulaciones creadas
            const baseGetUrl = "https://localhost:8080/simulation/listTraineeAndTrainer";
-            axios.get(baseGetUrl+  "/" + "train" + "&" + this.state.id)
+            axios.get(baseGetUrl+  "/train&" + this.state.id)
             .then(res => {
               const data = res.data.data;
               if (data) { 
@@ -107,9 +107,15 @@ class SimulationList extends React.Component  {
              axios.post(baseUrl,dataPost)
             .then(response=>{
                 if (response.data.success===true) {
-                    //alert(response.data.message)
-                   
-                    //this.setState({ alert: true});
+                  axios.get(baseGetUrl + "/train&" + this.state.id)
+                    .then(res => {
+                      const data = res.data.data;
+                      if (data) {
+                        this.setState({ listSimulation: data });
+                      }
+                    }).catch(error => {
+                      alert("Error 34 " + error);
+                    })
                 }
                 else {
                     alert(response.data.message)
@@ -127,7 +133,7 @@ class SimulationList extends React.Component  {
             .catch(error => {
               alert(error)
             })
-             this.setState({ listSimulation: arrSimulations });
+             //this.setState({ listSimulation: arrSimulations });
          
           
        
