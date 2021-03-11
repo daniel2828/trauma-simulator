@@ -19,26 +19,37 @@ class SimulationList extends React.Component  {
       redirect: false,
       id: this.props.location.state.id
     }
-   
+    
+    
   }
   handleRandomCreate(){
         var arrSimulations = [];
-  
+    
+      var request = {
+        params: {
+          idTrainer: 2,
+           idTrainee: this.props.location.state.id
+        }
+      }
            //const baseGetURL = "http://localhost:8080/simulation/listByTraineeAndTrainer";
            // Comprobar que el trainee no tenga ya las simulaciones creadas
-           const baseGetUrl = "https://localhost:8080/simulation/listTraineeAndTrainer";
-            axios.get(baseGetUrl+  "/train&" + this.state.id)
+          const baseGetUrl = "http://localhost:8080/simulation/listTraineeAndTrainer/";
+            
+            axios.get(baseGetUrl,request)
             .then(res => {
+              
               const data = res.data.data;
-              if (data) { 
+              
+              if (data.length>0) {
                   this.setState({ listSimulation:data });
-              } else { 
+              } else {
+                
                 const baseUrl = "http://localhost:8080/simulation/create"
                 // SUSTITUIR POR TUS DATAPOST
            // Primera simulacion
             var datapost1 = {
                 trainerId: 2,
-                traineeId: this.state.id,
+                traineeId: this.props.location.state.id,
                 sex: 1,
                 age: 30,
                 weight: 60,
@@ -57,8 +68,8 @@ class SimulationList extends React.Component  {
                 isTrainer: true
             }
              var datapost2 = {
-                trainerId: "train",
-                traineeId: this.state.traineeId,
+                trainerId: 2,
+                traineeId: this.props.location.state.id,
                 sex: 1,
                 age: 30,
                 weight: 60,
@@ -77,8 +88,8 @@ class SimulationList extends React.Component  {
                 isTrainer: true
              }
               var datapost3 = {
-                trainerId: "train",
-                traineeId: this.state.traineeId,
+                trainerId: 2,
+                traineeId: this.props.location.state.id,
                 sex: 1,
                 age: 30,
                 weight: 60,
@@ -101,48 +112,53 @@ class SimulationList extends React.Component  {
           arrSimulations.push(datapost2);
           arrSimulations.push(datapost3);
         
-       
-          arrSimulations.forEach(dataPost => { 
-            // Envio al backend y se genera en la base de datos si todo va bien
-             axios.post(baseUrl,dataPost)
-            .then(response=>{
-                if (response.data.success===true) {
-                  axios.get(baseGetUrl + "/train&" + this.state.id)
-                    .then(res => {
-                      const data = res.data.data;
-                      if (data) {
-                        this.setState({ listSimulation: data });
-                      }
-                    }).catch(error => {
-                      alert("Error 34 " + error);
-                    })
-                }
-                else {
+          
+            arrSimulations.forEach(dataPost => {
+              // Envio al backend y se genera en la base de datos si todo va bien
+              console.log("ARRAYS", dataPost)
+              axios.post(baseUrl, dataPost)
+                .then(response => {
+                  console.log(response)
+                  if (response.data.success === true) {
+                    axios.get(baseGetUrl, request)
+                      .then(res => {
+                        console.log("DAAA", res)
+                        const data = res.data.data;
+                        if (data) {
+                          this.setState({ listSimulation: data });
+                        }
+                      }).catch(error => {
+                        alert("Error 34 " + error);
+                      })
+                  }
+                  else {
                     alert(response.data.message)
-                }
-            })
-            .catch(error=>{
-                alert("Error 34 "+error)
-            })
+                  }
+                })
+                .catch(error => {
+                  alert("Error 34 " + error)
+                })
+           
 
 
-          })
-              }
+          })}
+              
               
             })
             .catch(error => {
               alert(error)
             })
+    
              //this.setState({ listSimulation: arrSimulations });
          
-          
+           
        
         
        
      
     }
   
-  componentDidMount(){
+  componentDidMount() {
     if (this.state.isTrainer) {
       axios.get("http://localhost:8080/simulation/listTrainer/"+this.props.location.state.id)
       .then(res => {
@@ -154,11 +170,29 @@ class SimulationList extends React.Component  {
       })
 
     } else {
-      if (this.props.trainerList) { 
+      if (this.props.location.state.trainerList) {
+        
          this.handleRandomCreate();
       }
       else {
         axios.get("http://localhost:8080/simulation/listTrainee/" + this.props.location.state.id)
+          .then(res => {
+            
+            const data = res.data.data;
+            this.setState({ listSimulation: data });
+          })
+          .catch(error => {
+           
+            alert(error)
+          })
+      }
+    }
+  }
+
+  componentDidUpdate() {
+    
+      if (this.state.isTrainer) {
+        axios.get("http://localhost:8080/simulation/listTrainer/" + this.state.id)
           .then(res => {
             const data = res.data.data;
             this.setState({ listSimulation: data });
@@ -166,30 +200,23 @@ class SimulationList extends React.Component  {
           .catch(error => {
             alert(error)
           })
-      }
-    }
-  }
 
-  componentDidUpdate(){
-    if (this.state.isTrainer) {
-      axios.get("http://localhost:8080/simulation/listTrainer/"+this.state.id)
-      .then(res => {
-        const data = res.data.data;
-        this.setState({ listSimulation:data });
-      })
-      .catch(error => {
-        alert(error)
-      })
-
-    } else {
-      axios.get("http://localhost:8080/simulation/listTrainee/"+this.state.id)
-      .then(res => {
-        const data = res.data.data;
-        this.setState({ listSimulation:data });
-      })
-      .catch(error => {
-        alert(error)
-      })
+      } else {
+        if (this.props.location.state.trainerList) {
+         
+          this.handleRandomCreate();
+        }
+        else {
+          axios.get("http://localhost:8080/simulation/listTrainee/" + this.props.location.state.id)
+            .then(res => {
+              const data = res.data.data;
+              this.setState({ listSimulation: data });
+            })
+            .catch(error => {
+              alert(error)
+            })
+        }
+      
     }
   }
 
@@ -238,37 +265,40 @@ class SimulationList extends React.Component  {
 
   loadFillData() {
     const { t } = this.props
-    return this.state.listSimulation.map((data)=>{
-      return(
-        <tr>
-          <th></th>
-          {this.state.isTrainer
-          ? <td>{data.trainee.name} {data.trainee.surname}</td>
-          : <td>{data.trainer.name} {data.trainer.surname}</td>}
-          <th>{(data.sex === 0) ? t('new-simulation.male') : t('new-simulation.female')}</th>
-          <td>{data.age}</td>
-          <td>{data.partBody}</td>
-          <td>{data.time}</td>
-          <td>
-            {data.inform !== null ?
-             <p>Simulación Finalizada</p> :
-             
-          this.state.isTrainer 
-            ? 
-                <Link className="btn btn-outline-danger" to={"/listSimulation/"} onClick={()=>this.sendDelete(data.simulationId)}> {t('list-simulation.delete')} </Link>
-             
-            : <Link className="btn btn-outline-info " 
-            to={{
-                pathname: "/simulation/"+data.simulationId,
-                state: { id: this.props.location.state.id}
-            }} >{t('list-simulation.enter')}
-            </Link>}
-          </td>
-          <td><Inform simulationId = {data.simulationId}
-                      surname = {data.trainee.surname}/> </td>
-        </tr>
-      )
-    });
+   
+    if (this.state.listSimulation) {
+      return this.state.listSimulation.map((data) => {
+        return (
+          <tr>
+            <th></th>
+            {this.state.isTrainer
+              ? <td>{data.trainee.name} {data.trainee.surname}</td>
+              : <td>{data.trainer.name} {data.trainer.surname}</td>}
+            <th>{(data.sex === 0) ? t('new-simulation.male') : t('new-simulation.female')}</th>
+            <td>{data.age}</td>
+            <td>{data.partBody}</td>
+            <td>{data.time}</td>
+            <td>
+              {data.inform !== null ?
+                <p>Simulación Finalizada</p> :
+                
+                this.state.isTrainer
+                  ?
+                  <Link className="btn btn-outline-danger" to={"/listSimulation/"} onClick={() => this.sendDelete(data.simulationId)}> {t('list-simulation.delete')} </Link>
+                
+                  : <Link className="btn btn-outline-info "
+                    to={{
+                      pathname: "/simulation/" + data.simulationId,
+                      state: { id: this.props.location.state.id }
+                    }} >{t('list-simulation.enter')}
+                  </Link>}
+            </td>
+            <td><Inform simulationId={data.simulationId}
+              surname={data.trainee.surname} /> </td>
+          </tr>
+        )
+      });
+    }
   }
   sendDelete(simulationId)
   {

@@ -22,16 +22,19 @@ class DashboardTrainee extends Component {
                             <Button>{t('dashboard.access-simulation')}</Button>
                           
                         </Link>
-                        <Link to={{
+                         <Link to={{
                                     pathname: '/listSimulation',
                             state: {
                                 id: this.props.location.state.id,
-                                        isTrainer:false,
-                                        trainerList : true
-                                    }
+                                trainerList: true,
+                                isTrainer: false,
+                            }
                         }}>
-                            <Button>{t('dashboard.awfawwaawdawd')}</Button>
+                          
+                            <Button>Entrenar</Button>
+                          
                         </Link>
+                       
                     </div>
                 </div>
             </div>
