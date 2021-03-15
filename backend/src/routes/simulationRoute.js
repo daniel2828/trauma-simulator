@@ -7,7 +7,7 @@ const simulationController = require('../controllers/simulationController')
 router.get('/list',simulationController.list );
 router.get('/listTrainer/:id', simulationController.listByTrainerId);
 router.get('/listTrainee/:id', simulationController.listByTraineeId);
-// DANI
+// List by trainee and trainer
 router.get('/listTraineeAndTrainer',simulationController.listByTraineeAndTrainer);
 router.get('/createData', simulationController.testdata)
 router.post('/create',simulationController.create);
