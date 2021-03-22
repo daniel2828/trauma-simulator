@@ -93,7 +93,8 @@ export default class LoginForm extends Component {
         fordward: true,
         deadModal: false,
         phase: ""
-      }
+        }
+        console.log("SIMULATION", this.props.location.state.trainerList)
     }
 
     componentDidMount(){
@@ -596,7 +597,7 @@ export default class LoginForm extends Component {
                         age = {this.state.age}
                         sex = {this.state.sex}
                         phase = {this.state.phase}
-                       
+                        trainerList = {this.props.location.state.trainerList}
                 
                         />
                 <Graphic 

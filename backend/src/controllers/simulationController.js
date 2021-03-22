@@ -61,7 +61,7 @@ controller.create = async (req,res) => {
     return data;
   })
   .catch(error =>{
-    console.log("Errorazo "+error)
+    console.log("Errorazo " + error)
     return error;
   })
   // return res
@@ -191,9 +191,9 @@ controller.listByTraineeId = async (req, res) => {
 }
 
 controller.listByTraineeAndTrainer = async (req, res) => {
+  // Devolver las simulaciones con el entrenador "Train"
   const { idTrainer,idTrainee } = req.query;
-console.log(req)
-  console.log(idTrainer, idTrainee);
+
   const data = await Simulation.findAll({
     include: [ { model: Trainer, as: 'trainer' },
                { model: Trainee, as: 'trainee' } ],

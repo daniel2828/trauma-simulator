@@ -20,26 +20,28 @@ class SimulationList extends React.Component  {
       id: this.props.location.state.id
     }
     
-    
+    console.log("LIST:" ,this.props.location.state.trainerList)
   }
-  handleRandomCreate(){
+  handleRandomCreate() {
+    // Crear las simulaciones de prueba
+    // Crea 3 simulaciones
         var arrSimulations = [];
     
-      var request = {
-        params: {
-          idTrainer: 2,
-           idTrainee: this.props.location.state.id
-        }
-      }
+          var request = {
+            params: {
+              idTrainer: 2,
+              idTrainee: this.props.location.state.id
+            }
+          }
            //const baseGetURL = "http://localhost:8080/simulation/listByTraineeAndTrainer";
            // Comprobar que el trainee no tenga ya las simulaciones creadas
           const baseGetUrl = "http://localhost:8080/simulation/listTraineeAndTrainer/";
             
             axios.get(baseGetUrl,request)
             .then(res => {
-              
+              // 
               const data = res.data.data;
-              
+              // Si data tiene contenido es que tenemos simulaciones de prueba ya creadas
               if (data.length>0) {
                   this.setState({ listSimulation:data });
               } else {
@@ -47,65 +49,63 @@ class SimulationList extends React.Component  {
                 const baseUrl = "http://localhost:8080/simulation/create"
                 // SUSTITUIR POR TUS DATAPOST
            // Primera simulacion
-            var datapost1 = {
-                trainerId: 2,
-                traineeId: this.props.location.state.id,
-                sex: 1,
-                age: 30,
-                weight: 60,
-                partBody: "brazo derecho",
-                bloodLoss: 10,
-                sistolicPressure: 10,
-                diastolicPressure: 10,
-                heartRate: this.state.heartRate,
-                breathingRate: this.state.breathingRate,
-                urineOutput: this.state.urineOutput,
-                saturation: this.state.saturation,
-                mentalStatus: this.state.mentalStatus,
-                phase: this.state.phase,
-                temperature: this.state.temperature,
-                time: this.state.time,
-                isTrainer: true
-            }
+           var datapost1 = {
+              trainerId: 2,
+              traineeId: this.props.location.state.id,
+              sex: 1,
+              age: 30,
+              weight: 60,
+              partBody: "pelvis",
+              bloodLoss: 100,
+              sistolicPressure: 70,
+              diastolicPressure: 45,
+              heartRate: 55,
+              breathingRate: 10,
+              urineOutput: 12,
+              saturation: 80,
+              mentalStatus: "lethargic",
+              phase: "prehospitalaria",
+              temperature: 34,
+              time: 250,
+            
+        }
              var datapost2 = {
                 trainerId: 2,
                 traineeId: this.props.location.state.id,
                 sex: 1,
                 age: 30,
                 weight: 60,
-                partBody: "brazo derecho",
-                bloodLoss: 10,
-                sistolicPressure: 10,
-                diastolicPressure: 10,
-                heartRate: this.state.heartRate,
-                breathingRate: this.state.breathingRate,
-                urineOutput: this.state.urineOutput,
-                saturation: this.state.saturation,
-                mentalStatus: this.state.mentalStatus,
-                phase: this.state.phase,
-                temperature: this.state.temperature,
-                time: this.state.time,
-                isTrainer: true
+                partBody: "pelvis",
+                bloodLoss: 100,
+                sistolicPressure: 70,
+                diastolicPressure: 45,
+                heartRate: 55,
+                breathingRate: 10,
+                urineOutput: 12,
+                saturation: 80,
+                mentalStatus: "lethargic",
+                phase: "prehospitalaria",
+                temperature: 34,
+                time: 250,
              }
               var datapost3 = {
-                trainerId: 2,
-                traineeId: this.props.location.state.id,
-                sex: 1,
-                age: 30,
-                weight: 60,
-                partBody: "brazo derecho",
-                bloodLoss: 10,
-                sistolicPressure: 10,
-                diastolicPressure: 10,
-                heartRate: this.state.heartRate,
-                breathingRate: this.state.breathingRate,
-                urineOutput: this.state.urineOutput,
-                saturation: this.state.saturation,
-                mentalStatus: this.state.mentalStatus,
-                phase: this.state.phase,
-                temperature: this.state.temperature,
-                time: this.state.time,
-                isTrainer: true
+                    trainerId: 2,
+                  traineeId: this.props.location.state.id,
+                  sex: 1,
+                  age: 30,
+                  weight: 60,
+                  partBody: "pelvis",
+                  bloodLoss: 100,
+                  sistolicPressure: 70,
+                  diastolicPressure: 45,
+                  heartRate: 55,
+                  breathingRate: 10,
+                  urineOutput: 12,
+                  saturation: 80,
+                  mentalStatus: "lethargic",
+                  phase: "prehospitalaria",
+                  temperature: 34,
+                  time: 250,
                 }
           // La añadimos al array
           arrSimulations.push(datapost1);
@@ -115,11 +115,13 @@ class SimulationList extends React.Component  {
           
             arrSimulations.forEach(dataPost => {
               // Envio al backend y se genera en la base de datos si todo va bien
-              console.log("ARRAYS", dataPost)
+             
               axios.post(baseUrl, dataPost)
                 .then(response => {
-                  console.log(response)
+                  
                   if (response.data.success === true) {
+                    // Una vez hemos creado las simulaciones , las obtenemos para mostrarlas 
+                    // En pantalla
                     axios.get(baseGetUrl, request)
                       .then(res => {
                         console.log("DAAA", res)
@@ -289,7 +291,11 @@ class SimulationList extends React.Component  {
                   : <Link className="btn btn-outline-info "
                     to={{
                       pathname: "/simulation/" + data.simulationId,
-                      state: { id: this.props.location.state.id }
+                      state: {
+                        id: this.props.location.state.id,
+                        trainerList:  this.props.location.state.trainerList
+                      },
+                     
                     }} >{t('list-simulation.enter')}
                   </Link>}
             </td>

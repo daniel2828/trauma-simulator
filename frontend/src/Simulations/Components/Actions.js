@@ -56,11 +56,12 @@ class Actions extends Component {
           tacModal:false,
           tacType:"",
           info:true
-    
+            
     
           
         }
         this.handleChange = this.handleChange.bind(this)
+        console.log("ACTIONS" , this.props.trainerList)
     }
 
 
@@ -154,7 +155,8 @@ class Actions extends Component {
                 return <Redirect to={{
                     pathname: '/listSimulation',
                     state: { id: this.props.id,
-                            isTrainer: false,
+                        isTrainer: false,
+                        trainerList: this.props.trainerList,
                             data: this.props.data}
                 }} />
 
