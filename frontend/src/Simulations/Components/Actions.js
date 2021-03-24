@@ -1246,20 +1246,25 @@ class Actions extends Component {
 
                 {this.props.phase === "hospitalaria" ? 
                 <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
-                    <Button onClick={() => { this.handleChange(1) }}>Anamnesis</Button>&nbsp;
-                    <Button onClick={() => { this.handleChange(2) }}>Vía aérea y ventilación</Button>&nbsp;
-                    <Button onClick={() => { this.handleChange(3) }}>Circulación/Hemorragias Externas</Button>&nbsp;
-                    
+                    <div className="actions-buttons">
+                        <Button className={this.state.
+                            ç?"clicked":null} onClick={() => { this.handleChange(1) }}>Anamnesis</Button>&nbsp;
+                        <Button className={this.state.dialogClicked?"clicked":null} onClick={() => { this.handleChange(2) }}>Vía aérea y ventilación</Button>&nbsp;
+                        <Button className={this.state.dialogClicked?"clicked":null} onClick={() => { this.handleChange(3) }}>Circulación/Hemorragias Externas</Button>&nbsp;
+                    </div>
 
 
                 </div>
                 :
 
                 <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                <Button onClick={() => { this.handleChange(8) }}>Anamnesis</Button>&nbsp;
-                <Button onClick={() => { this.handleChange(9) }}>Vía aérea y ventilación</Button>&nbsp;
-                <Button onClick={() => { this.handleChange(10) }}>Circulación/Hemorragias Externas</Button>&nbsp;
+                     <div className="actions-buttons">
+                            <Button onClick={() => { this.handleChange(8) }}>Anamnesis</Button>&nbsp;
+                            <Button onClick={() => { this.handleChange(9) }}>Vía aérea y ventilación</Button>&nbsp;
+                            <Button onClick={() => { this.handleChange(10) }}>Circulación/Hemorragias Externas</Button>&nbsp;
+                    </div>
             </div>
+                        
                 }
 
                 {this.props.phase === "hospitalaria" ?
