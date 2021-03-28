@@ -92,7 +92,8 @@ export default class LoginForm extends Component {
         finish:false,
         fordward: true,
         deadModal: false,
-        phase: ""
+        phase: "",
+        rxPelvis: ""
         }
         console.log("SIMULATION", this.props.location.state.trainerList)
     }
@@ -121,6 +122,7 @@ export default class LoginForm extends Component {
                     time: data.time,
                     temperature: data.temperature,
                     phase: data.phase,
+                    rxPelvis: data.rxPelvis,
                     document: []
                 })
                 initialData = data
@@ -569,36 +571,36 @@ export default class LoginForm extends Component {
                     disableFordward = {() => this.disableFordward()} />    
             </div>
             <div className="main">
-                <Actions change = {(first, second) => this.change(first, second)}
-                        send = {(variant,msg) => this.sendInformation(variant, msg)}
-                        sendModal = {(id, type, header,content) => this.sendModal(id, type, header, content)}
-                        time = {this.state.time}
-                        mentalStatus = {this.state.mentalStatus}
-                        diastolicPressure = {this.state.diastolicPressure}
-                        heartRate = {this.state.heartRate}
-                        sistolicPressure = {this.state.sistolicPressure}
-                        saturation = {this.state.saturation}
-                        urineOutput = {this.state.urineOutput}
-                        breathingRate = {this.state.breathingRate}
-                        partBody = {this.state.partBody}
-                        temperature = {this.state.temperature}
-                        bloodLoss = {this.state.bloodLoss}
-                        start = {this.state.start}
-                        startClick = {() => this.start()}
-                        finish = {this.state.finish}
-                        id = {this.props.location.state.id}
-                        simulationId = {this.props.match.params.id}
-                        timeSim = {this.timeSim}
-                        sendData = {(next) => this.sendData(next)}
-                        toogleCrono = {(next) => this.toogleCrono(next)}
-                        data = {initialData}
-                        test = {() => this.test()}
-                        testData = {testData} 
-                        age = {this.state.age}
-                        sex = {this.state.sex}
-                        phase = {this.state.phase}
-                        trainerList = {this.props.location.state.trainerList}
-                
+                  <Actions change={(first, second) => this.change(first, second)}
+                      send={(variant, msg) => this.sendInformation(variant, msg)}
+                      sendModal={(id, type, header, content) => this.sendModal(id, type, header, content)}
+                      time={this.state.time}
+                      mentalStatus={this.state.mentalStatus}
+                      diastolicPressure={this.state.diastolicPressure}
+                      heartRate={this.state.heartRate}
+                      sistolicPressure={this.state.sistolicPressure}
+                      saturation={this.state.saturation}
+                      urineOutput={this.state.urineOutput}
+                      breathingRate={this.state.breathingRate}
+                      partBody={this.state.partBody}
+                      temperature={this.state.temperature}
+                      bloodLoss={this.state.bloodLoss}
+                      start={this.state.start}
+                      startClick={() => this.start()}
+                      finish={this.state.finish}
+                      id={this.props.location.state.id}
+                      simulationId={this.props.match.params.id}
+                      timeSim={this.timeSim}
+                      sendData={(next) => this.sendData(next)}
+                      toogleCrono={(next) => this.toogleCrono(next)}
+                      data={initialData}
+                      test={() => this.test()}
+                      testData={testData}
+                      age={this.state.age}
+                      sex={this.state.sex}
+                      phase={this.state.phase}
+                      trainerList={this.props.location.state.trainerList}
+                      rxPelvis={ this.state.rxPelvis}
                         />
                 <Graphic 
                         diastolicPressure = {this.state.diastolicPressure}
