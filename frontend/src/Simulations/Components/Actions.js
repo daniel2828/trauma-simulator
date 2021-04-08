@@ -237,7 +237,9 @@ class Actions extends Component {
         const url = "http://localhost:8080/action/getMsg"
         axios.get(url, {
             params: {
+
                 actionName: action,
+                age : this.props.age,
                 bloodLoss: this.props.bloodLoss,
                 sistolicPressure: this.props.sistolicPressure,
                 diastolicPressure: this.props.diastolicPressure,
@@ -881,6 +883,13 @@ class Actions extends Component {
                 this.fillInformation("Rx Tórax",content)
                 break;
             case "pelvis":
+                switch (this.props.rxPelvis) {
+                    case "1":
+                    case "2":
+                    case "3":
+                    case "4":
+                        
+                }
                 content = rxPelvis
                 this.getMsg("info","rx")
                 this.props.sendModal(0, rx, "Rx Pelvis", content)
@@ -1248,7 +1257,7 @@ class Actions extends Component {
                 <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
                     <div className="actions-buttons">
                         <Button className={this.state.
-                            ç?"clicked":null} onClick={() => { this.handleChange(1) }}>Anamnesis</Button>&nbsp;
+                            ?"clicked":null} onClick={() => { this.handleChange(1) }}>Anamnesis</Button>&nbsp;
                         <Button className={this.state.dialogClicked?"clicked":null} onClick={() => { this.handleChange(2) }}>Vía aérea y ventilación</Button>&nbsp;
                         <Button className={this.state.dialogClicked?"clicked":null} onClick={() => { this.handleChange(3) }}>Circulación/Hemorragias Externas</Button>&nbsp;
                     </div>

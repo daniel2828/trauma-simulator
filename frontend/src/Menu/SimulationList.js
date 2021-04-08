@@ -66,7 +66,8 @@ class SimulationList extends React.Component  {
               mentalStatus: "lethargic",
               phase: "prehospitalaria",
               temperature: 34,
-              time: 250,
+             time: 250,
+              rxPelvis: 
             
         }
              var datapost2 = {
@@ -241,7 +242,7 @@ class SimulationList extends React.Component  {
               <th scope="col"></th>
               {this.state.isTrainer
               ? <th scope="col">{t('list-simulation.trainee')}</th>
-              : <th scope="col">{t('list-simulation.trainer')}</th>}
+              : <th scope="col">Fase</th>}
               <th scope="col">{t('list-simulation.sex')}</th>
               <th scope="col">{t('list-simulation.age')}</th>
               <th scope="col">{t('list-simulation.trauma')}</th>
@@ -275,14 +276,14 @@ class SimulationList extends React.Component  {
             <th></th>
             {this.state.isTrainer
               ? <td>{data.trainee.name} {data.trainee.surname}</td>
-              : <td>{data.trainer.name} {data.trainer.surname}</td>}
+              : <td>{data.phase}</td>}
             <th>{(data.sex === 0) ? t('new-simulation.male') : t('new-simulation.female')}</th>
             <td>{data.age}</td>
             <td>{data.partBody}</td>
             <td>{data.time}</td>
             <td>
               {data.inform !== null ?
-                <p>Simulación Finalizada</p> :
+                <p>ENTRAR</p> :
                 
                 this.state.isTrainer
                   ?

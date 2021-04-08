@@ -5,79 +5,82 @@ module.exports = {
     return queryInterface.createTable(
       'actions',
       {
-        actionId:{
+        actionId: {
           type: Sequelize.INTEGER,
           primaryKey: true,
           autoIncrement: true,
           unique: true,
           unique: "compositeKey"
-      },
+        },
         actionName: {
           type: Sequelize.STRING
-      },
+        },
         message: {
           type: Sequelize.STRING
-      },
+        },
         photo: {
           type: Sequelize.BOOLEAN
-      },
+        },
         bloodLossMin: {
           type: Sequelize.DOUBLE
-      } ,
-       bloodLossMax: {
+        },
+        bloodLossMax: {
           type: Sequelize.DOUBLE
-      },
+        },
         sistolicPressureMin: {
           type: Sequelize.DOUBLE
-      },
+        },
         sistolicPressureMax: {
           type: Sequelize.DOUBLE
-      },
+        },
         diastolicPressureMin: {
           type: Sequelize.DOUBLE
-      } ,
+        },
         diastolicPressureMax: {
           type: Sequelize.DOUBLE
-      },
+        },
         heartRateMin: {
           type: Sequelize.DOUBLE
-      },
+        },
         heartRateMax: {
           type: Sequelize.DOUBLE
-      },
+        },
         breathingRateMin: {
           type: Sequelize.DOUBLE
-      },
+        },
         breathingRateMax: {
           type: Sequelize.DOUBLE
-      },
+        },
         urineOutputMin: {
           type: Sequelize.DOUBLE
-      },
+        },
         urineOutputMax: {
           type: Sequelize.DOUBLE
-      },
+        },
         saturationMin: {
           type: Sequelize.DOUBLE
-      },
+        },
         saturationMax: {
           type: Sequelize.DOUBLE
-      },
+        },
         temperatureMin: {
           type: Sequelize.DOUBLE
-      },
+        },
         temperatureMax: {
           type: Sequelize.DOUBLE
-      },
+        },
         partBody: {
           type: Sequelize.STRING
-      },
+        },
         mentalStatus: {
           type: Sequelize.STRING
-      },
-       time: {
-         type: Sequelize.INTEGER
-      }
+        },
+        time: {
+          type: Sequelize.INTEGER
+        },
+        age : {
+          type: Sequelize.INTEGER
+        }
       },
       {
         sync: { force: true}

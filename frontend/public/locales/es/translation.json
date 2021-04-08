@@ -35,6 +35,7 @@
         "sex": "Sexo:",
         "age": "Edad:",
         "body": "Parte del cuerpo afectada:",
+        "rxPelvis": "Seleccione radiografia de pelvis",
         "bloodLoss": "Pérdida sanguínea",
         "s-pressure": "Presión sistólica (mmHg)",
         "d-pressure": "Presión diastólica (mmHg)",

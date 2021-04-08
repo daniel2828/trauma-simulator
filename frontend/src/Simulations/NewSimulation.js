@@ -36,7 +36,9 @@ class NewSimulation extends Component {
             phase:"",
             time: 0,
             redirect: false,
-            alert: false
+            alert: false,
+            rxPelvis: "",
+            showRx: false
         }
         this.handleSubmit = this.handleSubmit.bind(this);
     }
@@ -109,7 +111,8 @@ class NewSimulation extends Component {
             mentalStatus: this.state.mentalStatus,
             phase: this.state.phase,
             temperature: this.state.temperature,
-            time: this.state.time
+            time: this.state.time,
+            rxPelvis : this.state.rxPelvis
         }
 
         if (this.state.traineeId !== 0) {
@@ -147,7 +150,9 @@ class NewSimulation extends Component {
     handleChange = selectedOption => {
         this.setState({ partBody: selectedOption.value });
       };
-
+    handleChangeRxPelvis = selectedOption => {
+        this.setState({ rxPelvis: selectedOption.value });
+      };
     handleChange1 = selectedOption => {
     this.setState({ mentalStatus: selectedOption.value });
     };
@@ -164,6 +169,9 @@ class NewSimulation extends Component {
     handleChange5 = selectedOption => {
        
         this.setState({ phase: selectedOption.value });
+        if (selectedOption.value == "hospitalaria") {
+            this.setState({ showRx: true });
+        }
     };
 
     render() {
@@ -187,6 +195,12 @@ class NewSimulation extends Component {
             { value: 'leftArm', label: t('new-simulation.left-a') },
             { value: 'rightLeg', label: t('new-simulation.right-l') },
             { value: 'leftLeg', label: t('new-simulation.left-l')}
+          ];
+        const optionsRxPelvis = [
+            { value: '1', label: "Radiografias de pelvis 1"},
+            { value: '2', label: t('new-simulation.right-a') },
+            { value: '3', label: t('new-simulation.left-a') },
+            { value: '4', label: t('new-simulation.right-l') }
           ];
         return (
             <div>
@@ -221,7 +235,16 @@ class NewSimulation extends Component {
                                         options={optionsTrainees}
                                     />
                                 </td>
-                                <td></td>
+                                { }
+                                 <td>{t('new-simulation.rxPelvis')}</td>
+                                <td>
+                                    <Select
+                                        className="selector"
+                                        onChange={this.handleChangeRxPelvis}
+                                        options={optionsPartBody}
+                                        value={optionsPartBody.filter(option => option.value === this.state.rxPelvis)}
+                                    />
+                                </td> 
                             </tr>
                             <tr>
                                 <td>{t('new-simulation.sex')}</td>
@@ -252,7 +275,8 @@ class NewSimulation extends Component {
                                         options={optionsPartBody}
                                         value={optionsPartBody.filter(option => option.value === this.state.partBody)}
                                     />
-                                </td>    
+                                </td>
+                                
                                 <td>{t('new-simulation.status')}</td>
                                 <td>
                                     <Select
